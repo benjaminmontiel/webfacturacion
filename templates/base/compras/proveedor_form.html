@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+<div class="modal-dialog modal-lg">
+
+  <div class="modal-content">
+
+      {% if obj %}
+      <form method="POST" role="form" class="form-inline" action="{% url 'compras:proveedores_edit' obj.id %}">
+        {% csrf_token %}
+
+        {% else %}
+        <form method="POST" role="form" class="form-inline" action="{% url 'compras:proveedores_new' %}">
+        {% endif %}
+        {% csrf_token %}
+
+          <div class="col-xl-12 col-md-12 mb-12">
+              {% if obj %}
+              <div class="card border-left-warning shadow h-100 py-2">
+              {% else %}
+              <div class="card border-left-success shadow h-100 py-2">
+              {% endif %}
+                  <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+
+                      <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                              {% if obj %} Editar {% else %} Nuevo {% endif %}  Proveedor
+                          </div>
+                          <div class="dropdown-divider"></div>
+                          <div class="row">
+
+                            {{ form.as_p }}
+
+
+                            </div>
+                          </div>
+                          <div class="dropdown-divider"></div>
+                          <div class="row">
+                              <div class="col">
+                                  <button type="submit" name="guardar" class="btn btn-danger" ><span class="fa fa-save"></span>Guardar</button>
+                                  <a href="" onclick="return cerrar_modal('{% url 'compras:proveedores_list' %}') " class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+      </form>
+
+</div>
+
+</div>
+{% endblock %}

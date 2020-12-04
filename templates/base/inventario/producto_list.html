@@ -1,0 +1,89 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+{% csrf_token %}
+
+<div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Listado de Productos</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Acciones</div>
+
+                      <a class="dropdown-item" onclick="return abrir_modal('{% url 'inventario:producto_new' %}')" href="#"><i class="far fa-calendar-plus"></i> Nuevo</a>
+
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                {% if not obj %}
+
+                No Hay Productos
+
+                {% endif %}
+                <table class="table table-striped table-hover">
+                  <thead>
+                    <th> Id </th>
+                    <th> Marca </th>
+                    <th> Sub Categoria </th>
+                    <th> Precio </th>
+                    <th> Código </th>
+                    <th> Código de Barra </th>
+                    <th> Unidad de Medida </th>
+                    <th> Descripción </th>
+                    <th> Estado </th>
+
+
+
+
+                    <th class="all"> Acciones</th>
+
+                  </thead>
+
+                  <tbody>
+                    {% for item in obj %}
+                      <tr>
+                        <td> {{ item.id }} </td>
+                        <td> {{ item.marca }} </td>
+                        <td> {{ item.sub_categoria }} </td>
+                        <td> {{ item.precio }}</td>
+                        <td> {{ item.codigo }}</td>
+                        <td>{{ item.codigo_de_barra }}</td>
+                        <td>{{ item.unidad_medida}}</td>
+                        <td>{{ item.descripcion}}</td>
+                        <th> {{ item.Estado }} </th>
+
+                        <td>
+
+                        <a href="" onclick="return abrir_modal('{% url 'inventario:producto_edit' item.id %}')" class="btn btn-warning btn-circle btn-sm" role="button"><i class="far fa-edit"></i></a>
+                        <a href="" onclick="return abrir_modal('{% url 'inventario:producto_inactivar' item.id %}')" class="btn btn-danger btn-circle btn-sm" role="button"><i class="fas fa-minus-circle"></i></a>
+
+                        </td>
+
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+
+                </table>
+
+                </div>
+              </div>
+
+{% endblock page_content %}
+
+{% block js_page%}
+
+<script>
+
+  $(document).ready(function() {
+  $('.table').DataTable();
+    });
+
+
+</script>
+{% endblock js_page %}
